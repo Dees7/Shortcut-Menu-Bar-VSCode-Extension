@@ -21,6 +21,13 @@ const CANDIDATES = {
   win32: [join(process.env.LOCALAPPDATA || "", "Programs/Microsoft VS Code/resources/app")],
 };
 
+// The stylesheet shipped with the built-in webview extensions is a trimmed copy
+// and misses a couple of hundred icons, so the ids are read out of the bundle
+// instead, where every icon of the editor is declared. The stylesheet is still
+// used to tell the long-standing icons from the recent ones: an icon missing
+// there is newer than the published icon set, and while the editor draws it,
+// other tools may not know it yet.
+const BUNDLE = "out/vs/workbench/workbench.desktop.main.js";
 const CSS = "extensions/simple-browser/media/codicon.css";
 const TTF = "out/media/codicon.ttf";
 
@@ -39,24 +46,43 @@ function findAppFolder() {
 }
 
 function readIcons(appFolder) {
-  const css = readFileSync(join(appFolder, CSS), "utf8");
-  const pattern = /\.codicon-([a-z0-9-]+):before\s*\{\s*content:\s*"\\([0-9a-f]+)"/g;
+  const bundle = readFileSync(join(appFolder, BUNDLE), "utf8");
+  // every icon is declared as 'someName:register("some-name", 60545)'
+  const pattern = /[A-Za-z0-9_$]+:[A-Za-z0-9_$]+\("([a-z0-9-]+)",(\d+)\)/g;
   const icons = new Map();
   let match;
-  while ((match = pattern.exec(css))) {
-    // the first definition wins, later ones are aliases of the same glyph
+  while ((match = pattern.exec(bundle))) {
+    // the first declaration wins, later ones are aliases of the same glyph
     if (!icons.has(match[1])) {
-      icons.set(match[1], match[2]);
+      icons.set(match[1], Number(match[2]).toString(16));
     }
   }
-  return [...icons].sort((a, b) => a[0].localeCompare(b[0]));
+  if (icons.size === 0) {
+    throw new Error(`no icons found in ${BUNDLE}, the bundle format has changed`);
+  }
+
+  const cssPath = join(appFolder, CSS);
+  const published = existsSync(cssPath)
+    ? new Set(
+        [...readFileSync(cssPath, "utf8").matchAll(/\.codicon-([a-z0-9-]+):before/g)].map(
+          (hit) => hit[1]
+        )
+      )
+    : new Set();
+
+  return [...icons]
+    .map(([id, codePoint]) => ({ id, codePoint, recent: !published.has(id) }))
+    .sort((a, b) => a.id.localeCompare(b.id));
 }
 
 function render(icons, ttfPath) {
+  const recent = icons.filter((icon) => icon.recent).length;
   const cells = icons
     .map(
-      ([id, codePoint]) =>
-        `<div class="c" title="click to copy" onclick="copy('${id}')"><i>&#x${codePoint};</i><span>${id}</span></div>`
+      ({ id, codePoint, recent: isRecent }) =>
+        `<div class="c${isRecent ? " recent" : ""}"${
+          isRecent ? ' title="newer than the published icon set — see the note above"' : ' title="click to copy"'
+        } onclick="copy('${id}')"><i>&#x${codePoint};</i><span>${id}</span></div>`
     )
     .join("\n");
 
@@ -72,12 +98,15 @@ p { color:#888; margin:0 0 16px }
 .c { display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:4px; cursor:pointer }
 .c:hover { background:#2a2d2e }
 .c.copied { background:#0e639c }
+.c.recent span { color:#d7ba7d }
+.note { color:#d7ba7d; margin:0 0 16px }
 .c i { font-family:codicon; font-style:normal; font-size:16px; color:#c5c5c5; width:16px; text-align:center }
 .c span { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11px; color:#9cdcfe;
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 </style>
 <h1>Icons built into VSCode — ${icons.length} of them</h1>
 <p>Click an icon to copy its <code>$(id)</code>, then paste it into the icon setting of a user button.</p>
+<p class="note">${recent} of them, <b>shown in yellow</b>, are newer than the published icon set. Your editor draws them here, but it may refuse to draw one in a button — if a button comes out blank, that is why, so pick one of the white ones instead.</p>
 <input id="filter" placeholder="filter, e.g. fold, layout, git">
 <div class="grid" id="grid">
 ${cells}

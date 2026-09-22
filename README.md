@@ -73,7 +73,9 @@ Next to the command, each user button has two more settings:
 - `Shortcut Menu Bar: User Button XX Title` — the tooltip shown when hovering the button, e.g. `Run build task`. Defaults to `user action N`.
 - `Shortcut Menu Bar: User Button XX Icon` — either an icon built into VSCode, written as `$(rocket)`, or a path to your own `svg`/`png` file (`~` and `${userHome}` are expanded). Leave it empty to keep the default numbered icon.
 
-  Built-in icons are the easier option: they follow your theme and need no second image for light themes. [Browse them here](https://microsoft.github.io/vscode-codicons/dist/codicon.html), or run `npm run codicons` in a clone of this repository to get the same list built from your own VSCode, where clicking an icon copies its `$(id)`.
+  Built-in icons are the easier option: they follow your theme and need no second image for light themes. [Browse them here](https://microsoft.github.io/vscode-codicons/dist/codicon.html), or run `npm run codicons` in a clone of this repository to get the list built from your own VSCode, where clicking an icon copies its `$(id)`.
+
+  The two lists do not fully agree: VSCode carries icons of its own that the published set does not have, and those are not guaranteed to work in a button. `npm run codicons` marks them in yellow. If a button comes out blank, its icon is one of these — pick another id.
 
   An icon of another installed extension can be borrowed instead of copying the file: write `extension:publisher.name/path/inside/it.svg`. The folder is looked up by the id of that extension, so updating it does not break the setting — unlike a plain path, which carries a version number:
 
