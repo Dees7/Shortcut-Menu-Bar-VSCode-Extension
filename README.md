@@ -52,8 +52,6 @@ Buttons will be shown as numbers as shown in below image.
 
 ![User Buttons](images/user-buttons.png)
 
-> Note: To add custom icons for commands, see this [hack](https://github.com/GorvGoyl/Shortcut-Menu-Bar-VSCode-Extension/issues/58#issuecomment-918663851).
-
 You can also trigger a button by using corresponding hotkey combination (Windows: `Ctrl+Alt+0`, `Ctrl+Alt+1`, `Ctrl+Alt+2`, etc, Mac: `Shift+Cmd+0`, `Shift+Cmd+1`, `Shift+Cmd+2`, etc)
 
 1. Got to extension settings (`Ctrl+,` or `Cmd+,`).
@@ -66,6 +64,21 @@ Optionally, you can also:
 
 - Pass command arguments: add command arguments separated by pipe (e.g. `workbench.action.tasks.runTask|My Task`)
 - Run multiple commands: add comma-separated list of commands and those will get executed sequentially.
+
+### Custom title and icon
+
+Next to the command, each user button has two more settings:
+
+- `Shortcut Menu Bar: User Button XX Title` — the tooltip shown when hovering the button, e.g. `Run build task`. Defaults to `user action N`.
+- `Shortcut Menu Bar: User Button XX Icon` — either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference such as `$(rocket)`, or a path to your own `svg`/`png` file (`~` and `${userHome}` are expanded). To have a separate image for light themes, put a file with the same name plus a `_light` suffix next to it (e.g. `build.svg` and `build_light.svg`); without it the same image is used for both themes. Dark theme icons should be `#c5c5c5`, light theme ones `#424242`, sized `16x16`.
+
+Both settings are written into the manifest of the extension, which VSCode reads only at startup, so:
+
+- **a window reload is needed** — the extension offers it right after you change a setting;
+- **only the User setting is used**, a workspace-level override is ignored, because a single manifest is shared by all your windows;
+- after the extension is updated from the marketplace the manifest is back to its defaults; the extension notices this on the next start and offers the reload again.
+
+Some ready-made icons live in [`images/custom/`](images/custom) of the repository.
 
 ---
 

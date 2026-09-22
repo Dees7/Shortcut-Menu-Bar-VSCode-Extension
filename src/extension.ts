@@ -33,6 +33,12 @@ import {
   window,
   workspace,
 } from "vscode";
+import {
+  affectsUserButtons,
+  syncUserButtons,
+  USER_BUTTON_COUNT,
+  userButtonAction,
+} from "./appearance";
 
 var init = false;
 var hasCpp = false;
@@ -205,9 +211,8 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(disposableSwitch);
 
   // Adding 3 // user defined userButtons
-  for (let index = 1; index <= 10; index++) {
-    const printIndex = index !== 10 ? "0" + index : "" + index;
-    let action = "userButton" + printIndex;
+  for (let index = 1; index <= USER_BUTTON_COUNT; index++) {
+    let action = userButtonAction(index);
     let actionName = "ShortcutMenuBar." + action;
     let disposableUserButtonCommand = commands.registerCommand(
       actionName,
@@ -232,7 +237,58 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(disposableUserButtonCommand);
   }
 
+  // Adding 4 // titles and icons of the userButtons, kept in package.json
+  const extensionPath = context.extensionPath;
+  applyUserButtonAppearance(extensionPath);
+  context.subscriptions.push(
+    workspace.onDidChangeConfiguration((event) => {
+      if (affectsUserButtons((section) => event.affectsConfiguration(section))) {
+        applyUserButtonAppearance(extensionPath);
+      }
+    })
+  );
+
   //also update userButton in package.json.. see "Adding new userButtons" in help.md file
+}
+
+var reloadPromptShown = false;
+
+async function applyUserButtonAppearance(extensionPath: string) {
+  let changed = false;
+
+  try {
+    const result = syncUserButtons(extensionPath);
+    changed = result.changed;
+    if (result.errors.length > 0) {
+      window.showErrorMessage(
+        `Shortcut Menu Bar: ${result.errors.join("; ")}`
+      );
+    }
+  } catch (err: any) {
+    // the extension folder is read-only on some setups
+    window.showErrorMessage(
+      `Shortcut Menu Bar: can't update button titles and icons: ${err.message}`
+    );
+    return;
+  }
+
+  if (!changed || reloadPromptShown) {
+    return;
+  }
+
+  const actions = [{ title: "Reload Window" }];
+  reloadPromptShown = true;
+  try {
+    const result = await window.showInformationMessage(
+      "Shortcut Menu Bar: button titles and icons were updated. Reload the window to see them.",
+      ...actions
+    );
+    if (result === actions[0]) {
+      commands.executeCommand("workbench.action.reloadWindow");
+    }
+  } finally {
+    reloadPromptShown = false;
+  }
 }
 
 // this method is called when your extension is deactivated

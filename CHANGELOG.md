@@ -4,6 +4,10 @@ All notable changes to the "Shortcut-Menu-Bar" extension will be documented in t
 
 <!-- Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file. -->
 
+## [Unreleased]
+
+- user buttons got a configurable title (the tooltip shown on hover) and a configurable icon — a codicon reference or your own image file. See [README](https://github.com/GorvGoyl/Shortcut-Menu-Bar-VSCode-Extension#custom-title-and-icon); both are applied on a window reload, which the extension offers itself.
+
 ## [3.0.3] - 2021-05-12
 
 - fixed icons not showing properly

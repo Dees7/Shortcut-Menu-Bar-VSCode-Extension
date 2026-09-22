@@ -44,6 +44,7 @@
     "button"
   ],
   "activationEvents": [
+    "onStartupFinished",
     "onCommand:ShortcutMenuBar.navigateBack",
     "onCommand:ShortcutMenuBar.navigateForward",
     "onCommand:ShortcutMenuBar.switchHeaderSource",
@@ -284,11 +285,35 @@
             "default": null,
             "markdownDescription": "command executed with 'user action 1'; _icon is shown if set_"
           },
+          "ShortcutMenuBar.userButton01Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 1' button; _defaults to 'user action 1'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton01Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 1' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
+          },
           "ShortcutMenuBar.userButton02Command": {
             "title": "command",
             "type": "string",
             "default": null,
             "markdownDescription": "command executed with 'user action 2'; _icon is shown if set_"
+          },
+          "ShortcutMenuBar.userButton02Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 2' button; _defaults to 'user action 2'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton02Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 2' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
           },
           "ShortcutMenuBar.userButton03Command": {
             "title": "command",
@@ -296,11 +321,35 @@
             "default": null,
             "markdownDescription": "command executed with 'user action 3'; _icon is shown if set_"
           },
+          "ShortcutMenuBar.userButton03Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 3' button; _defaults to 'user action 3'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton03Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 3' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
+          },
           "ShortcutMenuBar.userButton04Command": {
             "title": "command",
             "type": "string",
             "default": null,
             "markdownDescription": "command executed with 'user action 4'; _icon is shown if set_"
+          },
+          "ShortcutMenuBar.userButton04Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 4' button; _defaults to 'user action 4'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton04Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 4' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
           },
           "ShortcutMenuBar.userButton05Command": {
             "title": "command",
@@ -308,11 +357,35 @@
             "default": null,
             "markdownDescription": "command executed with 'user action 5'; _icon is shown if set_"
           },
+          "ShortcutMenuBar.userButton05Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 5' button; _defaults to 'user action 5'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton05Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 5' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
+          },
           "ShortcutMenuBar.userButton06Command": {
             "title": "command",
             "type": "string",
             "default": null,
             "markdownDescription": "command executed with 'user action 6'; _icon is shown if set_"
+          },
+          "ShortcutMenuBar.userButton06Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 6' button; _defaults to 'user action 6'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton06Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 6' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
           },
           "ShortcutMenuBar.userButton07Command": {
             "title": "command",
@@ -320,11 +393,35 @@
             "default": null,
             "markdownDescription": "command executed with 'user action 7'; _icon is shown if set_"
           },
+          "ShortcutMenuBar.userButton07Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 7' button; _defaults to 'user action 7'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton07Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 7' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
+          },
           "ShortcutMenuBar.userButton08Command": {
             "title": "command",
             "type": "string",
             "default": null,
             "markdownDescription": "command executed with 'user action 8'; _icon is shown if set_"
+          },
+          "ShortcutMenuBar.userButton08Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 8' button; _defaults to 'user action 8'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton08Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 8' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
           },
           "ShortcutMenuBar.userButton09Command": {
             "title": "command",
@@ -332,11 +429,35 @@
             "default": null,
             "markdownDescription": "command executed with 'user action 9'; _icon is shown if set_"
           },
+          "ShortcutMenuBar.userButton09Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 9' button; _defaults to 'user action 9'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton09Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 9' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
+          },
           "ShortcutMenuBar.userButton10Command": {
             "title": "command",
             "type": "string",
             "default": null,
             "markdownDescription": "command executed with 'user action 0'; _icon is shown if set_"
+          },
+          "ShortcutMenuBar.userButton10Title": {
+            "title": "title",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "tooltip shown when hovering the 'user action 0' button; _defaults to 'user action 0'. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.userButton10Icon": {
+            "title": "icon",
+            "type": "string",
+            "default": null,
+            "markdownDescription": "icon of the 'user action 0' button: either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference like `$(rocket)` or a path to an svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is used for light themes). _Same reload and User-setting rules as the title_"
           }
         }
       }

@@ -28,6 +28,12 @@
 
 4. Test (`F5` to run in Debug mode). Make sure both icons (light, dark) are showing properly and command is working fine.
 
+### Adding new userButtons
+
+On top of the steps above, add `userButtonXXTitle` and `userButtonXXIcon` to `contributes`{`configuration`, next to `userButtonXXCommand`, and bump `USER_BUTTON_COUNT` in `src/appearance.ts`.
+
+`src/appearance.ts` rewrites `package.json` of the installed extension to apply those two settings, since VSCode reads command titles and icons from the manifest at load time only. Keep the defaults it falls back to (`user action N`, `images/userButtonXX.svg`) in sync with the manifest, otherwise the extension will rewrite the file and ask for a reload on every start. Custom images are copied into `images/custom-resolved/` of the installed extension, which is git-ignored.
+
 ### Explore the API
 
 https://code.visualstudio.com/api/references/contribution-points#Command-icon-specifications
