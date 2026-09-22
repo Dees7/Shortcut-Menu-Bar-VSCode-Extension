@@ -16,6 +16,15 @@ const manifest = JSON.parse(raw);
 
 const shortId = (command) => command.replace("ShortcutMenuBar.", "");
 
+// the indent the file already uses, so that rebuilding the schema does not
+// reformat everything around it; the twin of indentOf() in src/appearance.ts,
+// which rewrites the same file at runtime and cannot be imported here because
+// it comes with the 'vscode' module attached
+const indentOf = (text) => {
+  const match = /\n([\t ]+)"/.exec(text);
+  return match ? match[1] : "  ";
+};
+
 // the order buttons appear in the title bar by default, which is the order of
 // the menu entries themselves
 const buttons = manifest.contributes.menus["editor/title"].map((entry) => shortId(entry.command));
@@ -45,7 +54,7 @@ when.properties = Object.fromEntries(
   ])
 );
 
-const updated = JSON.stringify(manifest, null, 2) + "\n";
+const updated = JSON.stringify(manifest, null, indentOf(raw)) + "\n";
 writeFileSync(manifestPath, updated, "utf8");
 console.log(
   `${buttons.length} buttons` + (updated === raw ? ", schema was already up to date" : ", schema updated")
