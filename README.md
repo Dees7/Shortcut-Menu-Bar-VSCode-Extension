@@ -75,7 +75,7 @@ Next to the command, each user button has two more settings:
 
   Built-in icons are the easier option: they follow your theme and need no second image for light themes. [Browse them here](https://microsoft.github.io/vscode-codicons/dist/codicon.html), or run `npm run codicons` in a clone of this repository to get the list built from your own VSCode, where clicking an icon copies its `$(id)`.
 
-  The two lists do not fully agree: VSCode carries icons of its own that the published set does not have, and those are not guaranteed to work in a button. `npm run codicons` marks them in yellow. If a button comes out blank, its icon is one of these — pick another id.
+  The two lists do not fully agree: VSCode carries icons of its own, `$(openai)` and `$(claude)` among them, that the published gallery has yet to catch up with. `npm run codicons` finds those too and marks them in yellow — they work, but an older release of the editor may not have them.
 
   An icon of another installed extension can be borrowed instead of copying the file: write `extension:publisher.name/path/inside/it.svg`. The folder is looked up by the id of that extension, so updating it does not break the setting — unlike a plain path, which carries a version number:
 
@@ -90,7 +90,7 @@ Next to the command, each user button has two more settings:
 
 Both settings are written into the manifest of the extension, which VSCode reads only at startup, so:
 
-- **a window reload is needed** — the extension offers it right after you change a setting;
+- **a window reload is needed** — the extension offers it right after you change a setting. One reload is enough: VSCode keeps a cache of scanned extensions, checked against the modification time of `extensions.json` rather than against the manifests, so that file is touched to have the cache dropped;
 - **only the User setting is used**, a workspace-level override is ignored, because a single manifest is shared by all your windows;
 - after the extension is updated from the marketplace the manifest is back to its defaults; the extension notices this on the next start and offers the reload again.
 

@@ -25,7 +25,14 @@
 
 import { homedir } from "os";
 import { extname, isAbsolute, join, resolve } from "path";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  utimesSync,
+  writeFileSync,
+} from "fs";
 import { extensions, workspace } from "vscode";
 
 export const USER_BUTTON_COUNT = 10;
@@ -165,6 +172,25 @@ function sameIcon(current: IconSpec | undefined, wanted: IconSpec) {
   );
 }
 
+// VSCode caches the manifests of all scanned extensions and checks that cache
+// against the modification time of the extensions.json index, not against the
+// manifests themselves. Editing our own package.json therefore leaves a cache
+// that still looks up to date, and the first reload draws the buttons from it,
+// with the previous icons; only the reload after that shows the new ones.
+// Touching the index makes VSCode drop the cache and rescan, so one reload is
+// enough. Only the timestamp is changed, never the contents.
+function dropScanCache(extensionPath: string) {
+  try {
+    const index = join(extensionPath, "..", "extensions.json");
+    if (existsSync(index)) {
+      const now = new Date();
+      utimesSync(index, now, now);
+    }
+  } catch {
+    // not fatal: without it the new icons simply need one more reload
+  }
+}
+
 // keep whatever indentation the manifest already uses
 function indentOf(raw: string) {
   const match = /\n([\t ]+)"/.exec(raw);
@@ -227,6 +253,7 @@ export function syncUserButtons(extensionPath: string): {
       JSON.stringify(manifest, null, indentOf(raw)) + "\n",
       "utf8"
     );
+    dropScanCache(extensionPath);
   }
 
   return { changed, errors };

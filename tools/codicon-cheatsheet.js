@@ -81,7 +81,9 @@ function render(icons, ttfPath) {
     .map(
       ({ id, codePoint, recent: isRecent }) =>
         `<div class="c${isRecent ? " recent" : ""}"${
-          isRecent ? ' title="newer than the published icon set — see the note above"' : ' title="click to copy"'
+          isRecent
+            ? ' title="newer than the published icon set — older builds may not have it"'
+            : ' title="click to copy"'
         } onclick="copy('${id}')"><i>&#x${codePoint};</i><span>${id}</span></div>`
     )
     .join("\n");
@@ -106,7 +108,7 @@ p { color:#888; margin:0 0 16px }
 </style>
 <h1>Icons built into VSCode — ${icons.length} of them</h1>
 <p>Click an icon to copy its <code>$(id)</code>, then paste it into the icon setting of a user button.</p>
-<p class="note">${recent} of them, <b>shown in yellow</b>, are newer than the published icon set. Your editor draws them here, but it may refuse to draw one in a button — if a button comes out blank, that is why, so pick one of the white ones instead.</p>
+<p class="note">${recent} of them, <b>shown in yellow</b>, are newer than the published icon set. They work in this VSCode, but an older release or another build of it may not have them yet.</p>
 <input id="filter" placeholder="filter, e.g. fold, layout, git">
 <div class="grid" id="grid">
 ${cells}
