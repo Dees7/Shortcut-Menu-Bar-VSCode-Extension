@@ -24,7 +24,7 @@
 // configurable we rewrite our own package.json and ask for a window reload.
 
 import { homedir } from "os";
-import { extname, isAbsolute, join, resolve } from "path";
+import { extname, isAbsolute, join, resolve, sep } from "path";
 import {
   copyFileSync,
   existsSync,
@@ -116,7 +116,14 @@ function resolveSource(extensionPath: string, token: string) {
     if (!owner) {
       throw new Error(`extension '${id}' is not installed`);
     }
-    return join(owner.extensionPath, relative);
+    // The part after the id is meant to be a path inside that extension, so an
+    // absolute one or a '..' climbing out of the folder is a mistake in the
+    // setting; saying so beats resolving it to something unintended.
+    const source = resolve(owner.extensionPath, relative);
+    if (!source.startsWith(owner.extensionPath + sep)) {
+      throw new Error(`'${relative}' is not a path inside extension '${id}'`);
+    }
+    return source;
   }
 
   const expanded = expandHome(token);
