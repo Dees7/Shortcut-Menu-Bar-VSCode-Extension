@@ -15,6 +15,8 @@
 
 ### Adding new buttons
 
+Prefer an icon built into VSCode over an svg of your own: it follows the theme, needs no light/dark pair and adds nothing to the package. Run `npm run codicons` to browse the ones your VSCode has and to copy their ids, then put the id straight into `contributes`{`commands` as `"icon": "$(fold)"`. Only fall back to svg files when nothing fits — that is the case for the numbered userButton icons, since the icon set has no digits.
+
 1. Add both icons i.e dark `#C5C5C5` and light `#424242` to `images/` folder. Set SVG dimensions: `width="16"`, `height="16"` and, `viewBox` (see exisiting icons to get idea). You can get free svg icons from flaticon.com
 
 2. add command to `src\extension.ts`

@@ -71,7 +71,11 @@ Optionally, you can also:
 Next to the command, each user button has two more settings:
 
 - `Shortcut Menu Bar: User Button XX Title` — the tooltip shown when hovering the button, e.g. `Run build task`. Defaults to `user action N`.
-- `Shortcut Menu Bar: User Button XX Icon` — either a [codicon](https://microsoft.github.io/vscode-codicons/dist/codicon.html) reference such as `$(rocket)`, or a path to your own `svg`/`png` file (`~` and `${userHome}` are expanded). To have a separate image for light themes, put a file with the same name plus a `_light` suffix next to it (e.g. `build.svg` and `build_light.svg`); without it the same image is used for both themes. Dark theme icons should be `#c5c5c5`, light theme ones `#424242`, sized `16x16`.
+- `Shortcut Menu Bar: User Button XX Icon` — either an icon built into VSCode, written as `$(rocket)`, or a path to your own `svg`/`png` file (`~` and `${userHome}` are expanded). Leave it empty to keep the default numbered icon.
+
+  Built-in icons are the easier option: they follow your theme and need no second image for light themes. [Browse them here](https://microsoft.github.io/vscode-codicons/dist/codicon.html), or run `npm run codicons` in a clone of this repository to get the same list built from your own VSCode, where clicking an icon copies its `$(id)`.
+
+  For your own image, put a file with the same name plus a `_light` suffix next to it (e.g. `build.svg` and `build_light.svg`) to get a separate picture for light themes; without it the same image is used for both. Dark theme icons should be `#c5c5c5`, light theme ones `#424242`, sized `16x16`.
 
 Both settings are written into the manifest of the extension, which VSCode reads only at startup, so:
 
