@@ -79,6 +79,19 @@ function globalListSetting(key: string) {
     : [];
 }
 
+function globalMapSetting(key: string) {
+  const inspected = workspace
+    .getConfiguration("ShortcutMenuBar")
+    .inspect<Record<string, string>>(key);
+  const value = inspected?.globalValue ?? inspected?.defaultValue;
+  const entries = value && typeof value === "object" ? Object.entries(value) : [];
+  return new Map(
+    entries
+      .filter(([, condition]) => typeof condition === "string")
+      .map(([action, condition]) => [action, condition.trim()])
+  );
+}
+
 function expandHome(path: string) {
   if (path === "~") {
     return homedir();
@@ -201,7 +214,53 @@ function dropScanCache(extensionPath: string) {
   }
 }
 
-type MenuItem = { command: string; group?: string };
+type MenuItem = { command: string; group?: string; when?: string };
+
+function menuAction(item: MenuItem) {
+  return item.command.replace("ShortcutMenuBar.", "");
+}
+
+// A condition from the settings is appended to the one the button already has,
+// as '<built-in> && (<yours>)'. Since no built-in condition contains brackets,
+// the first ' && (' marks where ours begins and the built-in part can always be
+// recovered — which is what makes clearing the setting bring the button back.
+const CONDITION_MARKER = " && (";
+
+function builtInWhen(when: string) {
+  const marker = when.indexOf(CONDITION_MARKER);
+  return marker >= 0 && when.endsWith(")") ? when.slice(0, marker) : when;
+}
+
+/**
+ * Narrow down when each button is shown, after the 'buttonWhen' setting. The
+ * conditions are the ones used by keyboard shortcuts, and they are added to the
+ * condition a button already has rather than replacing it, so a button stays
+ * hidden while it is switched off or, for a user button, has no command.
+ */
+function applyButtonVisibility(items: MenuItem[]) {
+  const errors: string[] = [];
+  const conditions = globalMapSetting("buttonWhen");
+
+  const known = new Set(items.map(menuAction));
+  for (const action of conditions.keys()) {
+    if (!known.has(action)) {
+      errors.push(`unknown button '${action}' in buttonWhen`);
+    }
+  }
+
+  let changed = false;
+  for (const item of items) {
+    const builtIn = builtInWhen(item.when ?? "");
+    const condition = conditions.get(menuAction(item));
+    const when = condition ? builtIn + CONDITION_MARKER + condition + ")" : builtIn;
+    if (item.when !== when) {
+      item.when = when;
+      changed = true;
+    }
+  }
+
+  return { changed, errors };
+}
 
 /**
  * Renumber the buttons of the editor title bar after the 'buttonOrder' setting.
@@ -218,7 +277,7 @@ function applyButtonOrder(items: MenuItem[]) {
   const errors: string[] = [];
   const byAction = new Map<string, MenuItem>();
   for (const item of items) {
-    byAction.set(item.command.replace("ShortcutMenuBar.", ""), item);
+    byAction.set(menuAction(item), item);
   }
 
   const ordered: MenuItem[] = [];
@@ -307,9 +366,11 @@ export function syncManifest(extensionPath: string): {
     }
   }
 
-  const order = applyButtonOrder(manifest.contributes?.menus?.["editor/title"] ?? []);
-  changed = changed || order.changed;
-  errors.push(...order.errors);
+  const buttons = manifest.contributes?.menus?.["editor/title"] ?? [];
+  for (const step of [applyButtonOrder(buttons), applyButtonVisibility(buttons)]) {
+    changed = changed || step.changed;
+    errors.push(...step.errors);
+  }
 
   if (changed) {
     writeFileSync(
@@ -324,7 +385,7 @@ export function syncManifest(extensionPath: string): {
 }
 
 export function affectsAppearance(affects: (section: string) => boolean) {
-  if (affects("ShortcutMenuBar.buttonOrder")) {
+  if (affects("ShortcutMenuBar.buttonOrder") || affects("ShortcutMenuBar.buttonWhen")) {
     return true;
   }
   for (let index = 1; index <= USER_BUTTON_COUNT; index++) {

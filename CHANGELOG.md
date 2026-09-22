@@ -6,6 +6,7 @@ All notable changes to the "Shortcut-Menu-Bar" extension will be documented in t
 
 ## [Unreleased]
 
+- a button can be limited to where it is of use with the `ShortcutMenuBar.buttonWhen` setting, which takes the same conditions as keyboard shortcuts, e.g. `"codeFold": "editorLangId == python"`. The condition narrows down the one a button already has rather than replacing it.
 - the buttons can be reordered with the `ShortcutMenuBar.buttonOrder` setting, which takes a list of button ids and completes them as you type. Along the way two buttons that shared a position with another one — `changeEncoding` with `userButton01` and `powershellRestartSession` with `userButton02` — got places of their own.
 - a changed title or icon now takes one window reload instead of two: VSCode validates its cache of scanned extensions against the modification time of the `extensions.json` index, so editing a manifest alone left the first reload drawing the previous icons out of that cache.
 - the icon of a user button can now be borrowed from another installed extension with `extension:publisher.name/path/icon.svg`, and a light theme variant can be given explicitly as `dark|light`.

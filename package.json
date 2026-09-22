@@ -134,8 +134,6 @@
                 "toggleWordWrap",
                 "changeEncoding",
                 "powershellRestartSession",
-                "codeFold",
-                "codeUnfold",
                 "userButton01",
                 "userButton02",
                 "userButton03",
@@ -145,7 +143,9 @@
                 "userButton07",
                 "userButton08",
                 "userButton09",
-                "userButton10"
+                "userButton10",
+                "codeFold",
+                "codeUnfold"
               ],
               "enumDescriptions": [
                 "Switch Header/Source",
@@ -194,6 +194,187 @@
               ]
             },
             "markdownDescription": "order of the buttons in the editor title bar, left to right. Buttons listed here come first, everything left out keeps its usual place after them; an empty list means the default order. Buttons that are turned off take no space, so the list can name them anyway. _The order is relative to the buttons of this extension only — other extensions place their own buttons in the same title bar and are not affected. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
+          "ShortcutMenuBar.buttonWhen": {
+            "title": "button visibility",
+            "type": "object",
+            "default": {},
+            "additionalProperties": false,
+            "properties": {
+              "switchHeaderSource": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Switch Header/Source' button, e.g. `editorLangId == python`"
+              },
+              "navigateBack": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Navigate back' button, e.g. `editorLangId == python`"
+              },
+              "navigateForward": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Navigate forward' button, e.g. `editorLangId == python`"
+              },
+              "save": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Save' button, e.g. `editorLangId == python`"
+              },
+              "beautify": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Beautify' button, e.g. `editorLangId == python`"
+              },
+              "toggleRenderWhitespace": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Toggle render whitespace' button, e.g. `editorLangId == python`"
+              },
+              "openFilesList": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Show opened files list' button, e.g. `editorLangId == python`"
+              },
+              "toggleTerminal": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Toggle terminal' button, e.g. `editorLangId == python`"
+              },
+              "toggleActivityBar": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Toggle activity bar' button, e.g. `editorLangId == python`"
+              },
+              "quickOpen": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Quick open' button, e.g. `editorLangId == python`"
+              },
+              "findReplace": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Find replace' button, e.g. `editorLangId == python`"
+              },
+              "undo": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Undo' button, e.g. `editorLangId == python`"
+              },
+              "redo": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Redo' button, e.g. `editorLangId == python`"
+              },
+              "commentLine": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Toggle line comment' button, e.g. `editorLangId == python`"
+              },
+              "saveAll": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Save all' button, e.g. `editorLangId == python`"
+              },
+              "formatWith": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Format document with..' button, e.g. `editorLangId == python`"
+              },
+              "openFile": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Open file' button, e.g. `editorLangId == python`"
+              },
+              "newFile": {
+                "type": "string",
+                "markdownDescription": "when to show the 'New file' button, e.g. `editorLangId == python`"
+              },
+              "goToDefinition": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Go to definition' button, e.g. `editorLangId == python`"
+              },
+              "cut": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Cut' button, e.g. `editorLangId == python`"
+              },
+              "copy": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Copy' button, e.g. `editorLangId == python`"
+              },
+              "paste": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Paste' button, e.g. `editorLangId == python`"
+              },
+              "compareWithSaved": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Compare with saved' button, e.g. `editorLangId == python`"
+              },
+              "showCommands": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Open command pallet' button, e.g. `editorLangId == python`"
+              },
+              "startDebugging": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Start debugging' button, e.g. `editorLangId == python`"
+              },
+              "indentLines": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Indent lines' button, e.g. `editorLangId == python`"
+              },
+              "outdentLines": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Outdent lines' button, e.g. `editorLangId == python`"
+              },
+              "openSettings": {
+                "type": "string",
+                "markdownDescription": "when to show the 'open settings' button, e.g. `editorLangId == python`"
+              },
+              "toggleWordWrap": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Toggle word wrap' button, e.g. `editorLangId == python`"
+              },
+              "changeEncoding": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Change file encoding' button, e.g. `editorLangId == python`"
+              },
+              "powershellRestartSession": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Restart PowerShell session' button, e.g. `editorLangId == python`"
+              },
+              "userButton01": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 1' button, e.g. `editorLangId == python`"
+              },
+              "userButton02": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 2' button, e.g. `editorLangId == python`"
+              },
+              "userButton03": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 3' button, e.g. `editorLangId == python`"
+              },
+              "userButton04": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 4' button, e.g. `editorLangId == python`"
+              },
+              "userButton05": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 5' button, e.g. `editorLangId == python`"
+              },
+              "userButton06": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 6' button, e.g. `editorLangId == python`"
+              },
+              "userButton07": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 7' button, e.g. `editorLangId == python`"
+              },
+              "userButton08": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 8' button, e.g. `editorLangId == python`"
+              },
+              "userButton09": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 9' button, e.g. `editorLangId == python`"
+              },
+              "userButton10": {
+                "type": "string",
+                "markdownDescription": "when to show the 'user action 0' button, e.g. `editorLangId == python`"
+              },
+              "codeFold": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Code fold' button, e.g. `editorLangId == python`"
+              },
+              "codeUnfold": {
+                "type": "string",
+                "markdownDescription": "when to show the 'Code unfold' button, e.g. `editorLangId == python`"
+              }
+            },
+            "markdownDescription": "extra condition for showing a button, so that it only appears where it is of use. Keys are button ids, values are [when clauses](https://code.visualstudio.com/api/references/when-clause-contexts) — the same expressions keyboard shortcuts use, e.g. `editorLangId == python` or `resourceExtname == .md`. The condition is added to the one the button already has, so it never brings back a button that is switched off or, for a user button, has no command. Remove a key to show that button everywhere again. _Run `Developer: Inspect Context Keys` to see what holds true where you are pointing. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.save": {
             "title": "Save active file",
@@ -1177,6 +1358,7 @@
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
     "codicons": "node tools/codicon-cheatsheet.js",
+    "sync-schema": "node tools/sync-settings-schema.js",
     "login": "vsce login jerrygoyal",
     "publish": "vsce publish",
     "package": "vsce package"

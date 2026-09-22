@@ -104,6 +104,37 @@ Buttons named here come first in that order; everything left out keeps its usual
 
 The order applies to the buttons of this extension alone. The title bar is shared: other extensions put their own buttons there and place them by numbers of their own, which this setting cannot reach.
 
+### Where a button is shown
+
+By default a button sits in the title bar of every file. `Shortcut Menu Bar: Button When` narrows that down per button, using the same conditions as keyboard shortcuts:
+
+```jsonc
+"ShortcutMenuBar.buttonWhen": {
+  "codeFold": "editorLangId == python",
+  "userButton01": "resourceExtname == .md || resourceExtname == .txt",
+  "startDebugging": "workspaceFolderCount > 0",
+  "powershellRestartSession": "isWindows"
+}
+```
+
+Keys are button ids, values are [when clauses](https://code.visualstudio.com/api/references/when-clause-contexts). A few that come in handy:
+
+| Condition | Button appears |
+|---|---|
+| `editorLangId == python` | only in Python files |
+| `resourceExtname == .md` | only for a given extension |
+| `resourceFilename =~ /test/` | only when the name matches a pattern |
+| `resourceScheme == file` | not in previews or remote read-only views |
+| `editorHasSelection` | only when something is selected |
+| `!editorReadonly` | not in read-only editors |
+| `isWindows`, `isMac`, `isLinux` | only on that platform |
+| `gitOpenRepositoryCount != 0` | only inside a git repository |
+| `config.editor.wordWrap == off` | depending on another setting |
+
+To find out what holds true in a given spot, run `Developer: Inspect Context Keys` from the command palette and click there — the editor prints every context that applies.
+
+Your condition is added to the one a button already has, not put in its place, so it cannot bring back a button you switched off, nor a user button without a command. Drop a key to show that button everywhere again.
+
 ### How the settings are applied
 
 Every setting above is written into the manifest of the extension, which VSCode reads only at startup, so:
