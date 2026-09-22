@@ -6,6 +6,7 @@ All notable changes to the "Shortcut-Menu-Bar" extension will be documented in t
 
 ## [Unreleased]
 
+- the icon of a user button can now be borrowed from another installed extension with `extension:publisher.name/path/icon.svg`, and a light theme variant can be given explicitly as `dark|light`.
 - 22 of the built-in buttons now use the icons that ship with VSCode instead of bundled svg files, so they follow the theme and stay sharp on any display; 44 image files dropped. Idea taken from the [fork](https://github.com/GitMensch/Shortcut-Menu-Bar-VSCode-Extension) of [@GitMensch](https://github.com/GitMensch). The numbered icons of the user buttons stay as they are — the icon set has no digits.
 - added 'Code fold' and 'Code unfold' buttons, folding and unfolding the whole file. Taken from the [fork](https://github.com/SkBull/Shortcut-Menu-Bar-VSCode-Extension) of [@SkBull](https://github.com/SkBull).
 - user buttons got a configurable title (the tooltip shown on hover) and a configurable icon — a codicon reference or your own image file. See [README](https://github.com/GorvGoyl/Shortcut-Menu-Bar-VSCode-Extension#custom-title-and-icon); both are applied on a window reload, which the extension offers itself.

@@ -309,7 +309,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 1' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 1' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton02Command": {
             "title": "command",
@@ -327,7 +327,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 2' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 2' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton03Command": {
             "title": "command",
@@ -345,7 +345,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 3' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 3' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton04Command": {
             "title": "command",
@@ -363,7 +363,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 4' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 4' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton05Command": {
             "title": "command",
@@ -381,7 +381,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 5' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 5' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton06Command": {
             "title": "command",
@@ -399,7 +399,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 6' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 6' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton07Command": {
             "title": "command",
@@ -417,7 +417,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 7' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 7' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton08Command": {
             "title": "command",
@@ -435,7 +435,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 8' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 8' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton09Command": {
             "title": "command",
@@ -453,7 +453,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 9' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 9' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           },
           "ShortcutMenuBar.userButton10Command": {
             "title": "command",
@@ -471,7 +471,7 @@
             "title": "icon",
             "type": "string",
             "default": null,
-            "markdownDescription": "icon of the 'user action 0' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or a path to your own svg/png file (`~` and `${userHome}` are expanded; a sibling `_light` file is picked up for light themes). _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+            "markdownDescription": "icon of the 'user action 0' button. Either a built-in icon written as `$(rocket)` — **[browse all built-in icons](https://microsoft.github.io/vscode-codicons/dist/codicon.html)**, hover an icon there to get its id — or an image file: a path of your own (`~` and `${userHome}` are expanded), or `extension:publisher.name/path/icon.svg` to borrow one from another installed extension. For light themes add a second file after a `|` (`dark|light`); given just one, a sibling file suffixed with `_light` is used when there is one. _Leave empty for the default numbered icon. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
           }
         }
       }

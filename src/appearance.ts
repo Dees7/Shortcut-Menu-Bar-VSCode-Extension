@@ -26,7 +26,7 @@
 import { homedir } from "os";
 import { extname, isAbsolute, join, resolve } from "path";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { workspace } from "vscode";
+import { extensions, workspace } from "vscode";
 
 export const USER_BUTTON_COUNT = 10;
 
@@ -72,6 +72,27 @@ function expandHome(path: string) {
   return path.replace(/\$\{userHome\}/g, homedir());
 }
 
+// 'extension:publisher.name/path/icon.svg' points at a file of another
+// installed extension. Its folder is looked up through the API instead of being
+// spelled out, because the folder name carries a version that changes on every
+// update of that extension.
+const EXTENSION_REF = /^extension:([^/\\]+)[/\\](.+)$/;
+
+function resolveSource(extensionPath: string, token: string) {
+  const reference = EXTENSION_REF.exec(token);
+  if (reference) {
+    const [, id, relative] = reference;
+    const owner = extensions.getExtension(id);
+    if (!owner) {
+      throw new Error(`extension '${id}' is not installed`);
+    }
+    return join(owner.extensionPath, relative);
+  }
+
+  const expanded = expandHome(token);
+  return isAbsolute(expanded) ? expanded : resolve(extensionPath, expanded);
+}
+
 function copyIfChanged(from: string, to: string) {
   if (existsSync(to) && readFileSync(to).equals(readFileSync(from))) {
     return false;
@@ -80,11 +101,12 @@ function copyIfChanged(from: string, to: string) {
   return true;
 }
 
-// A custom icon is either a codicon reference like '$(rocket)' — used as is —
-// or a path to an image file, which gets copied inside the extension folder
-// because VSCode resolves icon paths relative to it. A sibling file suffixed
-// with '_light' is picked up for the light theme, following the naming of the
-// stock icons; without it the same image is used for both themes.
+// A custom icon is either a built-in icon like '$(rocket)' — used as is — or one
+// or two image files, which get copied inside the extension folder because
+// VSCode resolves icon paths relative to it. Both files are given as
+// 'dark|light'; with a single one, a sibling suffixed with '_light' is picked up
+// for the light theme, following the naming of the stock icons, and failing that
+// the same image serves both themes.
 // 'copied' reports a new image behind an unchanged path, which needs a reload
 // just as much as a changed path does.
 function customIcon(
@@ -96,23 +118,31 @@ function customIcon(
     return { icon: setting, copied: false };
   }
 
-  const source = expandHome(setting);
-  const absolute = isAbsolute(source) ? source : resolve(extensionPath, source);
-  if (!existsSync(absolute)) {
-    throw new Error(`icon file '${setting}' of ${action} not found`);
+  const [darkToken, lightToken] = setting.split("|").map((part) => part.trim());
+
+  const darkSource = resolveSource(extensionPath, darkToken);
+  if (!existsSync(darkSource)) {
+    throw new Error(`icon file '${darkToken}' of ${action} not found`);
   }
 
-  const suffix = extname(absolute);
-  const lightSource = absolute.slice(0, absolute.length - suffix.length) + "_light" + suffix;
+  let lightSource;
+  if (lightToken) {
+    lightSource = resolveSource(extensionPath, lightToken);
+    if (!existsSync(lightSource)) {
+      throw new Error(`light icon file '${lightToken}' of ${action} not found`);
+    }
+  } else {
+    const suffix = extname(darkSource);
+    const sibling =
+      darkSource.slice(0, darkSource.length - suffix.length) + "_light" + suffix;
+    lightSource = existsSync(sibling) ? sibling : darkSource;
+  }
 
   mkdirSync(join(extensionPath, CUSTOM_ICON_DIR), { recursive: true });
-  const dark = join(CUSTOM_ICON_DIR, action + suffix);
-  const light = join(CUSTOM_ICON_DIR, action + "_light" + suffix);
-  const copiedDark = copyIfChanged(absolute, join(extensionPath, dark));
-  const copiedLight = copyIfChanged(
-    existsSync(lightSource) ? lightSource : absolute,
-    join(extensionPath, light)
-  );
+  const dark = join(CUSTOM_ICON_DIR, action + extname(darkSource));
+  const light = join(CUSTOM_ICON_DIR, action + "_light" + extname(lightSource));
+  const copiedDark = copyIfChanged(darkSource, join(extensionPath, dark));
+  const copiedLight = copyIfChanged(lightSource, join(extensionPath, light));
 
   return {
     // package.json wants forward slashes regardless of the platform

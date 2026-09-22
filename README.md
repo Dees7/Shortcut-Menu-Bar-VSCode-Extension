@@ -75,7 +75,16 @@ Next to the command, each user button has two more settings:
 
   Built-in icons are the easier option: they follow your theme and need no second image for light themes. [Browse them here](https://microsoft.github.io/vscode-codicons/dist/codicon.html), or run `npm run codicons` in a clone of this repository to get the same list built from your own VSCode, where clicking an icon copies its `$(id)`.
 
-  For your own image, put a file with the same name plus a `_light` suffix next to it (e.g. `build.svg` and `build_light.svg`) to get a separate picture for light themes; without it the same image is used for both. Dark theme icons should be `#c5c5c5`, light theme ones `#424242`, sized `16x16`.
+  An icon of another installed extension can be borrowed instead of copying the file: write `extension:publisher.name/path/inside/it.svg`. The folder is looked up by the id of that extension, so updating it does not break the setting — unlike a plain path, which carries a version number:
+
+  ```jsonc
+  // the Codex logo, taken from the ChatGPT extension
+  "ShortcutMenuBar.userButton07Icon": "extension:openai.chatgpt/resources/blossom-white.svg|extension:openai.chatgpt/resources/blossom-black.svg"
+  ```
+
+  As shown above, two images separated by a `|` mean `dark|light`. With a single image, a file with the same name plus a `_light` suffix next to it (e.g. `build.svg` and `build_light.svg`) is used for light themes, and failing that the same image serves both. Dark theme icons should be `#c5c5c5`, light theme ones `#424242`, sized `16x16`.
+
+  Some extensions publish their icons for everyone to use, and those need no file at all — just `$(their-icon-id)`. To find out whether one does, look for `contributes.icons` in its `package.json`.
 
 Both settings are written into the manifest of the extension, which VSCode reads only at startup, so:
 
