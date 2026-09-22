@@ -69,6 +69,16 @@ function globalSetting(key: string) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function globalListSetting(key: string) {
+  const inspected = workspace
+    .getConfiguration("ShortcutMenuBar")
+    .inspect<string[]>(key);
+  const value = inspected?.globalValue ?? inspected?.defaultValue;
+  return Array.isArray(value)
+    ? value.filter((entry) => typeof entry === "string").map((entry) => entry.trim())
+    : [];
+}
+
 function expandHome(path: string) {
   if (path === "~") {
     return homedir();
@@ -191,6 +201,55 @@ function dropScanCache(extensionPath: string) {
   }
 }
 
+type MenuItem = { command: string; group?: string };
+
+/**
+ * Renumber the buttons of the editor title bar after the 'buttonOrder' setting.
+ * Buttons it names come first, in the order given; the rest keep the order they
+ * have in the manifest, which stays the default because only the group of an
+ * entry is rewritten here, never the position of the entry itself.
+ *
+ * Numbering starts at 1 and stays inside the range the buttons already occupy:
+ * the group is shared with every other extension that puts something in the
+ * title bar, so moving out of that range would shift all our buttons past
+ * theirs.
+ */
+function applyButtonOrder(items: MenuItem[]) {
+  const errors: string[] = [];
+  const byAction = new Map<string, MenuItem>();
+  for (const item of items) {
+    byAction.set(item.command.replace("ShortcutMenuBar.", ""), item);
+  }
+
+  const ordered: MenuItem[] = [];
+  for (const action of globalListSetting("buttonOrder")) {
+    const item = byAction.get(action);
+    if (!item) {
+      errors.push(`unknown button '${action}' in buttonOrder`);
+      continue;
+    }
+    if (!ordered.includes(item)) {
+      ordered.push(item);
+    }
+  }
+  for (const item of items) {
+    if (!ordered.includes(item)) {
+      ordered.push(item);
+    }
+  }
+
+  let changed = false;
+  ordered.forEach((item, index) => {
+    const group = "navigation@" + (index + 1);
+    if (item.group !== group) {
+      item.group = group;
+      changed = true;
+    }
+  });
+
+  return { changed, errors };
+}
+
 // keep whatever indentation the manifest already uses
 function indentOf(raw: string) {
   const match = /\n([\t ]+)"/.exec(raw);
@@ -198,12 +257,13 @@ function indentOf(raw: string) {
 }
 
 /**
- * Bring the title and icon of every user button in package.json in line with
- * the settings. 'changed' tells whether the file was rewritten, i.e. whether a
- * window reload is needed for the change to show up; settings that could not
- * be applied are reported in 'errors' and leave that button at its default.
+ * Bring package.json in line with the settings: the title and icon of every
+ * user button, and the order of all the buttons. 'changed' tells whether the
+ * file was rewritten, i.e. whether a window reload is needed for the change to
+ * show up; settings that could not be applied are reported in 'errors' and
+ * leave that button at its default.
  */
-export function syncUserButtons(extensionPath: string): {
+export function syncManifest(extensionPath: string): {
   changed: boolean;
   errors: string[];
 } {
@@ -247,6 +307,10 @@ export function syncUserButtons(extensionPath: string): {
     }
   }
 
+  const order = applyButtonOrder(manifest.contributes?.menus?.["editor/title"] ?? []);
+  changed = changed || order.changed;
+  errors.push(...order.errors);
+
   if (changed) {
     writeFileSync(
       manifestPath,
@@ -259,7 +323,10 @@ export function syncUserButtons(extensionPath: string): {
   return { changed, errors };
 }
 
-export function affectsUserButtons(affects: (section: string) => boolean) {
+export function affectsAppearance(affects: (section: string) => boolean) {
+  if (affects("ShortcutMenuBar.buttonOrder")) {
+    return true;
+  }
   for (let index = 1; index <= USER_BUTTON_COUNT; index++) {
     const action = "ShortcutMenuBar." + userButtonAction(index);
     if (affects(action + "Title") || affects(action + "Icon")) {

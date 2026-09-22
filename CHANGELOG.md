@@ -6,6 +6,7 @@ All notable changes to the "Shortcut-Menu-Bar" extension will be documented in t
 
 ## [Unreleased]
 
+- the buttons can be reordered with the `ShortcutMenuBar.buttonOrder` setting, which takes a list of button ids and completes them as you type. Along the way two buttons that shared a position with another one — `changeEncoding` with `userButton01` and `powershellRestartSession` with `userButton02` — got places of their own.
 - a changed title or icon now takes one window reload instead of two: VSCode validates its cache of scanned extensions against the modification time of the `extensions.json` index, so editing a manifest alone left the first reload drawing the previous icons out of that cache.
 - the icon of a user button can now be borrowed from another installed extension with `extension:publisher.name/path/icon.svg`, and a light theme variant can be given explicitly as `dark|light`.
 - 22 of the built-in buttons now use the icons that ship with VSCode instead of bundled svg files, so they follow the theme and stay sharp on any display; 44 image files dropped. Idea taken from the [fork](https://github.com/GitMensch/Shortcut-Menu-Bar-VSCode-Extension) of [@GitMensch](https://github.com/GitMensch). The numbered icons of the user buttons stay as they are — the icon set has no digits.

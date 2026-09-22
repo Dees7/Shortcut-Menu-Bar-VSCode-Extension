@@ -95,6 +95,106 @@
       {
         "title": "Shortcut Menu Bar configuration",
         "properties": {
+          "ShortcutMenuBar.buttonOrder": {
+            "title": "button order",
+            "type": "array",
+            "default": [],
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "switchHeaderSource",
+                "navigateBack",
+                "navigateForward",
+                "save",
+                "beautify",
+                "toggleRenderWhitespace",
+                "openFilesList",
+                "toggleTerminal",
+                "toggleActivityBar",
+                "quickOpen",
+                "findReplace",
+                "undo",
+                "redo",
+                "commentLine",
+                "saveAll",
+                "formatWith",
+                "openFile",
+                "newFile",
+                "goToDefinition",
+                "cut",
+                "copy",
+                "paste",
+                "compareWithSaved",
+                "showCommands",
+                "startDebugging",
+                "indentLines",
+                "outdentLines",
+                "openSettings",
+                "toggleWordWrap",
+                "changeEncoding",
+                "powershellRestartSession",
+                "codeFold",
+                "codeUnfold",
+                "userButton01",
+                "userButton02",
+                "userButton03",
+                "userButton04",
+                "userButton05",
+                "userButton06",
+                "userButton07",
+                "userButton08",
+                "userButton09",
+                "userButton10"
+              ],
+              "enumDescriptions": [
+                "Switch Header/Source",
+                "Navigate back",
+                "Navigate forward",
+                "Save",
+                "Beautify",
+                "Toggle render whitespace",
+                "Show opened files list",
+                "Toggle terminal",
+                "Toggle activity bar",
+                "Quick open",
+                "Find replace",
+                "Undo",
+                "Redo",
+                "Toggle line comment",
+                "Save all",
+                "Format document with..",
+                "Open file",
+                "New file",
+                "Go to definition",
+                "Cut",
+                "Copy",
+                "Paste",
+                "Compare with saved",
+                "Open command pallet",
+                "Start debugging",
+                "Indent lines",
+                "Outdent lines",
+                "open settings",
+                "Toggle word wrap",
+                "Change file encoding",
+                "Restart PowerShell session",
+                "user action 1",
+                "user action 2",
+                "user action 3",
+                "user action 4",
+                "user action 5",
+                "user action 6",
+                "user action 7",
+                "user action 8",
+                "user action 9",
+                "user action 0",
+                "Code fold",
+                "Code unfold"
+              ]
+            },
+            "markdownDescription": "order of the buttons in the editor title bar, left to right. Buttons listed here come first, everything left out keeps its usual place after them; an empty list means the default order. Buttons that are turned off take no space, so the list can name them anyway. _The order is relative to the buttons of this extension only — other extensions place their own buttons in the same title bar and are not affected. Applied to the extension manifest, so a window reload is needed and only the User setting is used, not a workspace one_"
+          },
           "ShortcutMenuBar.save": {
             "title": "Save active file",
             "type": "boolean",
@@ -1011,62 +1111,62 @@
         {
           "when": "config.ShortcutMenuBar.userButton01Command",
           "command": "ShortcutMenuBar.userButton01",
-          "group": "navigation@30"
+          "group": "navigation@32"
         },
         {
           "when": "config.ShortcutMenuBar.userButton02Command",
           "command": "ShortcutMenuBar.userButton02",
-          "group": "navigation@31"
+          "group": "navigation@33"
         },
         {
           "when": "config.ShortcutMenuBar.userButton03Command",
           "command": "ShortcutMenuBar.userButton03",
-          "group": "navigation@32"
+          "group": "navigation@34"
         },
         {
           "when": "config.ShortcutMenuBar.userButton04Command",
           "command": "ShortcutMenuBar.userButton04",
-          "group": "navigation@33"
+          "group": "navigation@35"
         },
         {
           "when": "config.ShortcutMenuBar.userButton05Command",
           "command": "ShortcutMenuBar.userButton05",
-          "group": "navigation@34"
+          "group": "navigation@36"
         },
         {
           "when": "config.ShortcutMenuBar.userButton06Command",
           "command": "ShortcutMenuBar.userButton06",
-          "group": "navigation@35"
+          "group": "navigation@37"
         },
         {
           "when": "config.ShortcutMenuBar.userButton07Command",
           "command": "ShortcutMenuBar.userButton07",
-          "group": "navigation@36"
+          "group": "navigation@38"
         },
         {
           "when": "config.ShortcutMenuBar.userButton08Command",
           "command": "ShortcutMenuBar.userButton08",
-          "group": "navigation@37"
+          "group": "navigation@39"
         },
         {
           "when": "config.ShortcutMenuBar.userButton09Command",
           "command": "ShortcutMenuBar.userButton09",
-          "group": "navigation@38"
+          "group": "navigation@40"
         },
         {
           "when": "config.ShortcutMenuBar.userButton10Command",
           "command": "ShortcutMenuBar.userButton10",
-          "group": "navigation@39"
+          "group": "navigation@41"
         },
         {
           "when": "config.ShortcutMenuBar.codeFold",
           "command": "ShortcutMenuBar.codeFold",
-          "group": "navigation@40"
+          "group": "navigation@42"
         },
         {
           "when": "config.ShortcutMenuBar.codeUnfold",
           "command": "ShortcutMenuBar.codeUnfold",
-          "group": "navigation@41"
+          "group": "navigation@43"
         }
       ]
     }

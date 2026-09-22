@@ -88,7 +88,25 @@ Next to the command, each user button has two more settings:
 
   Some extensions publish their icons for everyone to use, and those need no file at all — just `$(their-icon-id)`. To find out whether one does, look for `contributes.icons` in its `package.json`.
 
-Both settings are written into the manifest of the extension, which VSCode reads only at startup, so:
+### Order of the buttons
+
+`Shortcut Menu Bar: Button Order` lays the buttons out left to right. It takes button ids, and the editor completes them as you type:
+
+```jsonc
+"ShortcutMenuBar.buttonOrder": [
+  "userButton05",
+  "codeFold",
+  "save"
+]
+```
+
+Buttons named here come first in that order; everything left out keeps its usual place after them, so only the few you care about need listing. An empty list means the default order. Buttons that are turned off take up no space, so they can be named anyway.
+
+The order applies to the buttons of this extension alone. The title bar is shared: other extensions put their own buttons there and place them by numbers of their own, which this setting cannot reach.
+
+### How the settings are applied
+
+Every setting above is written into the manifest of the extension, which VSCode reads only at startup, so:
 
 - **a window reload is needed** — the extension offers it right after you change a setting. One reload is enough: VSCode keeps a cache of scanned extensions, checked against the modification time of `extensions.json` rather than against the manifests, so that file is touched to have the cache dropped;
 - **only the User setting is used**, a workspace-level override is ignored, because a single manifest is shared by all your windows;

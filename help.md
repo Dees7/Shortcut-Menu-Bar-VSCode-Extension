@@ -26,7 +26,8 @@ Prefer an icon built into VSCode over an svg of your own: it follows the theme, 
    1. add entry to `activationEvents`
    2. add entry to `contributes`{`configuration` (set 'default' to false)
    3. add icons path to `contributes`{`commands`
-   4. add entry to `menus`{`editor/title`
+   4. add entry to `menus`{`editor/title`, at the position the button should take by default — `navigation@N` are numbered straight through, and the order of the entries is what `ShortcutMenuBar.buttonOrder` falls back to
+   5. add the id to the `enum` of `ShortcutMenuBar.buttonOrder`, so that it can be named there
 
 4. Test (`F5` to run in Debug mode). Make sure both icons (light, dark) are showing properly and command is working fine.
 

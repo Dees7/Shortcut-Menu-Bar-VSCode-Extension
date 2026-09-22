@@ -34,8 +34,8 @@ import {
   workspace,
 } from "vscode";
 import {
-  affectsUserButtons,
-  syncUserButtons,
+  affectsAppearance,
+  syncManifest,
   USER_BUTTON_COUNT,
   userButtonAction,
 } from "./appearance";
@@ -244,7 +244,7 @@ export function activate(context: ExtensionContext) {
   applyUserButtonAppearance(extensionPath);
   context.subscriptions.push(
     workspace.onDidChangeConfiguration((event) => {
-      if (affectsUserButtons((section) => event.affectsConfiguration(section))) {
+      if (affectsAppearance((section) => event.affectsConfiguration(section))) {
         applyUserButtonAppearance(extensionPath);
       }
     })
@@ -259,7 +259,7 @@ async function applyUserButtonAppearance(extensionPath: string) {
   let changed = false;
 
   try {
-    const result = syncUserButtons(extensionPath);
+    const result = syncManifest(extensionPath);
     changed = result.changed;
     if (result.errors.length > 0) {
       window.showErrorMessage(
