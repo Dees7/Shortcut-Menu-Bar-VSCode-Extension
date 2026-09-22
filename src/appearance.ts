@@ -221,9 +221,11 @@ function menuAction(item: MenuItem) {
 }
 
 // A condition from the settings is appended to the one the button already has,
-// as '<built-in> && (<yours>)'. Since no built-in condition contains brackets,
-// the first ' && (' marks where ours begins and the built-in part can always be
-// recovered — which is what makes clearing the setting bring the button back.
+// as '<built-in> && (<yours>)'. As long as no built-in condition contains
+// brackets — none of the 43 in the manifest does — the first ' && (' marks
+// where ours begins and the built-in part can be recovered, which is what
+// makes clearing the setting bring the button back. Should that stop holding,
+// builtInWhen() below refuses to guess rather than cut a condition short.
 // A button without a built-in condition gets 'true' in its place, since
 // '&& (<yours>)' on its own is not an expression VSCode accepts; the marker
 // then still stands where it is expected and the button comes back the same
@@ -231,10 +233,20 @@ function menuAction(item: MenuItem) {
 const CONDITION_MARKER = " && (";
 const ALWAYS = "true";
 
+/**
+ * The condition a button has of its own, with the part coming from the setting
+ * cut off. Undefined when the cut cannot be trusted: a bracket left in the
+ * built-in part means conditions in the manifest have grown groups of their
+ * own, and then ' && (' no longer tells our part from theirs — '<a> && (<b>)'
+ * is the same string whether '(<b>)' is ours or was always there.
+ */
 function builtInWhen(when: string) {
   const marker = when.indexOf(CONDITION_MARKER);
   const builtIn =
     marker >= 0 && when.endsWith(")") ? when.slice(0, marker) : when;
+  if (builtIn.includes("(") || builtIn.includes(")")) {
+    return undefined;
+  }
   return builtIn === ALWAYS ? "" : builtIn;
 }
 
@@ -257,8 +269,20 @@ function applyButtonVisibility(items: MenuItem[]) {
 
   let changed = false;
   for (const item of items) {
+    const action = menuAction(item);
     const builtIn = builtInWhen(item.when ?? "");
-    const condition = conditions.get(menuAction(item));
+    const condition = conditions.get(action);
+    // Leave such a button exactly as it is — rewriting it would cut a piece of
+    // its own condition off — and say so only when the setting asks for it,
+    // since on its own it is nothing the user can do anything about.
+    if (builtIn === undefined) {
+      if (condition) {
+        errors.push(
+          `button '${action}' cannot take a condition: '${item.when}' has brackets of its own`
+        );
+      }
+      continue;
+    }
     const when = condition
       ? (builtIn || ALWAYS) + CONDITION_MARKER + condition + ")"
       : builtIn;
