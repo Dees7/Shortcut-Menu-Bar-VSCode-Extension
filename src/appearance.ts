@@ -224,11 +224,18 @@ function menuAction(item: MenuItem) {
 // as '<built-in> && (<yours>)'. Since no built-in condition contains brackets,
 // the first ' && (' marks where ours begins and the built-in part can always be
 // recovered — which is what makes clearing the setting bring the button back.
+// A button without a built-in condition gets 'true' in its place, since
+// '&& (<yours>)' on its own is not an expression VSCode accepts; the marker
+// then still stands where it is expected and the button comes back the same
+// way as any other one.
 const CONDITION_MARKER = " && (";
+const ALWAYS = "true";
 
 function builtInWhen(when: string) {
   const marker = when.indexOf(CONDITION_MARKER);
-  return marker >= 0 && when.endsWith(")") ? when.slice(0, marker) : when;
+  const builtIn =
+    marker >= 0 && when.endsWith(")") ? when.slice(0, marker) : when;
+  return builtIn === ALWAYS ? "" : builtIn;
 }
 
 /**
@@ -252,9 +259,15 @@ function applyButtonVisibility(items: MenuItem[]) {
   for (const item of items) {
     const builtIn = builtInWhen(item.when ?? "");
     const condition = conditions.get(menuAction(item));
-    const when = condition ? builtIn + CONDITION_MARKER + condition + ")" : builtIn;
-    if (item.when !== when) {
-      item.when = when;
+    const when = condition
+      ? (builtIn || ALWAYS) + CONDITION_MARKER + condition + ")"
+      : builtIn;
+    if ((item.when ?? "") !== when) {
+      if (when) {
+        item.when = when;
+      } else {
+        delete item.when;
+      }
       changed = true;
     }
   }
