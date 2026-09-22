@@ -132,10 +132,17 @@ const output = join(tmpdir(), "vscode-codicons.html");
 writeFileSync(output, render(icons, join(appFolder, TTF)), "utf8");
 console.log(`${icons.length} icons from ${appFolder}\nwritten to ${output}`);
 
-const open = { darwin: "open", win32: "start", linux: "xdg-open" }[platform()];
+// on Windows 'start' is a command of the shell rather than a program of its
+// own, so it has to be run through cmd; its first argument is the window title
+// and stays empty, otherwise a quoted path would be taken for one
+const open = {
+  darwin: ["open", [output]],
+  win32: ["cmd", ["/c", "start", "", output]],
+  linux: ["xdg-open", [output]],
+}[platform()];
 if (open) {
   try {
-    execFileSync(open, [output]);
+    execFileSync(open[0], open[1]);
   } catch {
     // opening is a convenience, the path is printed above anyway
   }
