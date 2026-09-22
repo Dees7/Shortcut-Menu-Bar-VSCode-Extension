@@ -85,7 +85,9 @@
     "onCommand:ShortcutMenuBar.userButton06",
     "onCommand:ShortcutMenuBar.userButton07",
     "onCommand:ShortcutMenuBar.userButton08",
-    "onCommand:ShortcutMenuBar.userButton09"
+    "onCommand:ShortcutMenuBar.userButton09",
+    "onCommand:ShortcutMenuBar.codeFold",
+    "onCommand:ShortcutMenuBar.codeUnfold"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -278,6 +280,18 @@
             "type": "boolean",
             "default": false,
             "description": "show icon for 'Restart PowerShell session'"
+          },
+          "ShortcutMenuBar.codeFold": {
+            "title": "Code fold",
+            "type": "boolean",
+            "default": false,
+            "description": "show icon for 'Code fold'"
+          },
+          "ShortcutMenuBar.codeUnfold": {
+            "title": "Code unfold",
+            "type": "boolean",
+            "default": false,
+            "description": "show icon for 'Code unfold'"
           },
           "ShortcutMenuBar.userButton01Command": {
             "title": "command",
@@ -743,6 +757,24 @@
         }
       },
       {
+        "command": "ShortcutMenuBar.codeFold",
+        "title": "Code fold",
+        "category": "ShortcutMenuBar",
+        "icon": {
+          "light": "images/fold_light.svg",
+          "dark": "images/fold.svg"
+        }
+      },
+      {
+        "command": "ShortcutMenuBar.codeUnfold",
+        "title": "Code unfold",
+        "category": "ShortcutMenuBar",
+        "icon": {
+          "light": "images/unfold_light.svg",
+          "dark": "images/unfold.svg"
+        }
+      },
+      {
         "command": "ShortcutMenuBar.userButton01",
         "title": "user action 1",
         "category": "ShortcutMenuBar",
@@ -1091,6 +1123,16 @@
           "when": "config.ShortcutMenuBar.userButton10Command",
           "command": "ShortcutMenuBar.userButton10",
           "group": "navigation@39"
+        },
+        {
+          "when": "config.ShortcutMenuBar.codeFold",
+          "command": "ShortcutMenuBar.codeFold",
+          "group": "navigation@40"
+        },
+        {
+          "when": "config.ShortcutMenuBar.codeUnfold",
+          "command": "ShortcutMenuBar.codeUnfold",
+          "group": "navigation@41"
         }
       ]
     }

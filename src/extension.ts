@@ -111,6 +111,8 @@ export function activate(context: ExtensionContext) {
       "workbench.action.editor.changeEncoding",
     ],
     ["ShortcutMenuBar.powershellRestartSession", "PowerShell.RestartSession"],
+    ["ShortcutMenuBar.codeFold", "editor.foldAll"],
+    ["ShortcutMenuBar.codeUnfold", "editor.unfoldAll"],
   ];
 
   let disposableCommandsArray: Disposable[] = [];

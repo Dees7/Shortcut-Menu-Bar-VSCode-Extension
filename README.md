@@ -43,6 +43,7 @@ Go to VSCode settings (`CTRL+,` or `CMD+,`) and search for `shortcut menu bar`. 
 ✔ Go to definition  
 ✔ Cut, Copy, Paste  
 ✔ Start Debugging  
+✔ Fold all, Unfold all  
 ✔ User-defined buttons (0-9)
 
 ## Create buttons with custom commands
